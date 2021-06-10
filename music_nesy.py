@@ -4,7 +4,7 @@ import clingo
 from midiutil import MIDIFile
 from note2midi import note_to_number
 
-filename = 'Backing Track C - Am - Dm - G (S.Soul) tempo 80.mp3'
+filename = 'Cmaj-Amin.mp3'
 
 proc = madmom.features.chords.CNNChordFeatureProcessor()
 feats = proc('tracks/' + filename)
@@ -31,7 +31,7 @@ print(chord_dict)
 
 print(total_length)
 
-treshold = total_length * 0.2
+treshold = total_length * 0.1
 chord_list = []
 for chord in chord_dict:
     if chord_dict[chord] > treshold:
