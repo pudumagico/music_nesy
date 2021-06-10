@@ -1,28 +1,28 @@
 %% Major chords
 % some notes are the same es = f, bs = c
-3{note(c); note(e); note(g)}3 :- chord(c,maj).
-3{note(cs); note(es); note(gs)}3 :- chord(cs,maj).
-3{note(d); note(fs); note(a)}3 :- chord(d,maj).
-3{note(ds); note(g); note(as)}3 :- chord(ds,maj).
-3{note(e); note(gs); note(b)}3 :- chord(e,maj).
-3{note(f); note(a); note(c)}3 :- chord(f,maj).
-3{note(fs); note(as); note(cs)}3 :- chord(fs,maj).
-3{note(g); note(b); note(d)}3 :- chord(g,maj).
-3{note(gs); note(c); note(ds)}3 :- chord(gs,maj).
-3{note(a); note(cs); note(e)}3 :- chord(a,maj).
-3{note(as); note(d); note(f)}3 :- chord(as,maj).
-3{note(b); note(ds); note(fs)}3 :- chord(b,maj).
+note(c;e;g) :- chord(c,maj).
+note(cs;es;gs) :- chord(cs,maj).
+note(d;fs;a) :- chord(d,maj).
+note(ds;g;as) :- chord(ds,maj).
+note(e;gs;b) :- chord(e,maj).
+note(f;a;c) :- chord(f,maj).
+note(fs;as;cs) :- chord(fs,maj).
+note(g;b;d) :- chord(g,maj).
+note(gs;c;ds) :- chord(gs,maj).
+note(a;cs;e) :- chord(a,maj).
+note(as;d;f) :- chord(as,maj).
+note(b;ds;fs) :- chord(b,maj).
 
 %% Minor chords
-3{note(c); note(ds); note(g)}3 :- chord(c,min).
-3{note(cs); note(e); note(gs)}3 :- chord(cs,min).
-3{note(d); note(f); note(a)}3 :- chord(d,min).
-3{note(ds); note(fs); note(as)}3 :- chord(ds,min).
-3{note(e); note(g); note(b)}3 :- chord(e,min).
-3{note(f); note(gs); note(c)}3 :- chord(f,min).
-3{note(fs); note(a); note(cs)}3 :- chord(fs,min).
-3{note(g); note(a); note(d)}3 :- chord(g,min).
-3{note(gs); note(b); note(ds)}3 :- chord(gs,min).
-3{note(a); note(c); note(e)}3 :- chord(a,min).
-3{note(as); note(cs); note(f)}3 :- chord(as,min).
-3{note(b); note(d); note(fs)}3 :- chord(b,min).
+note(c;ds;g) :- chord(c,min).
+note(cs;e;gs) :- chord(cs,min).
+note(d;f;a) :- chord(d,min).
+note(ds;fs;as) :- chord(ds,min).
+note(e;g;b) :- chord(e,min).
+note(f;gs;c) :- chord(f,min).
+note(fs;a;cs) :- chord(fs,min).
+note(g;a;d) :- chord(g,min).
+note(gs;b;ds) :- chord(gs,min).
+note(a;c;e) :- chord(a,min).
+note(as;cs;f) :- chord(as,min).
+note(b;d;fs) :- chord(b,min).
