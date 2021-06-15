@@ -86,7 +86,7 @@ def melody_to_midi(melody, output):
     for i, pitch in enumerate(melody):
         MyMIDI.addNote(track, channel, pitch, time + i, duration, volume)
 
-    with open('melodies/' + output + '.mid', "wb") as output_file:
+    with open(output + '.mid', "wb") as output_file:
         MyMIDI.writeFile(output_file)
 
 def main(file_path):
@@ -95,13 +95,13 @@ def main(file_path):
     #use the chords in clingo
     melody = reason_melody(chords)
     #produce a midi
-    melody_to_midi(melody, file_path.split('/')[-1])
+    melody_to_midi(melody, file_path)
     #optionally, we may conver midi to wav/flac/mp3 and merge the files togheter
     #TODO
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print('Usage: python main.py tracks/Cmaj-Amin.mp3')
+        print('Usage: python main.py Cmaj-Amin.mp3')
         exit(0)
 
     main(sys.argv[1])

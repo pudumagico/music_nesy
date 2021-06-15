@@ -1,13 +1,6 @@
 % We have all the notes
 % We can produce simple melodies for a set number of bars
 % Of course, the beat will be set to 4/4 for simplicity
-% notes(c).
-% notes(d).
-% notes(e).
-% notes(f).
-% notes(g).
-% notes(a).
-% notes(b).
 
 bars(2).
 time(1..M) :- bars(N), M = 4*N.
