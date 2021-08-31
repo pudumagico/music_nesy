@@ -1,4 +1,4 @@
-% Took from
+% Modified from:
 % Using answer set programming to detect and compose
 % music in the structure of twelve bar blues
 

@@ -24,6 +24,6 @@ time(1..M) :- bars(N), M = 4*N.
 
 % For instance, we could try to minimize the number of repeated notes
 % At least this would give something random
-repeated(N,T1;T2) :- melody(N,T1,_), melody(N,T2,_), T1!=T2.
-repeated(N,T2) :- melody(N,T1,_), melody(N,T2,_), T1!=T2.
-#minimize { 1,X,T : repeated(X,T) }.
+% repeated(N,T1;T2) :- melody(N,T1,_), melody(N,T2,_), T1!=T2.
+% repeated(N,T2) :- melody(N,T1,_), melody(N,T2,_), T1!=T2.
+% #minimize { 1,X,T : repeated(X,T) }.

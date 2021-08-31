@@ -128,6 +128,7 @@ INSTRUMENTS = [
     'Applause',
     'Gunshot'
 ]
+
 NOTES = ['c', 'cs', 'd', 'ds', 'e', 'f', 'fs', 'g', 'gs', 'a', 'as', 'b']
 OCTAVES = list(range(11))
 NOTES_IN_OCTAVE = len(NOTES)
@@ -160,6 +161,9 @@ def number_to_note(number: int) -> tuple:
 
 
 def note_to_number(note: str, octave: int) -> int:
+    if note == 'silence':
+        return 0
+    
     assert note in NOTES, errors['notes']
     assert octave in OCTAVES, errors['notes']
 
