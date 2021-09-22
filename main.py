@@ -51,7 +51,7 @@ def reason_melody(chords, style=None):
     ctl.load('melody.lp')
     ctl.add('base', [], ' '.join(f'chord({t},{s}).' for t, s in chords))
 
-    ctl.add('base', [], '#show melody/3. #show scale/2. #show note/1.')
+    ctl.add('base', [], '#show melody/4 . #show scale/2. #show notes/1.')
     if style:
         ctl.load(style)
 
@@ -61,28 +61,30 @@ def reason_melody(chords, style=None):
     for m in solvehandle:
         models.append(m)
 
-    print(models)
+    print('len', len(models))
     model = random.choice(models)
 
     melody = []
     for symbol in model.symbols(shown=True):
+        print(str(symbol))
         if 'melody' in str(symbol):
-            print(symbol)
             melody.append(
-                ( int(str(symbol.arguments[0])), str(symbol.arguments[1]), int(str(symbol.arguments[2]))))
+                ( int(str(symbol.arguments[0])), int(str(symbol.arguments[1])), str(symbol.arguments[2]), int(str(symbol.arguments[3]))))
+
 
     melody.sort(key=lambda x: x[0])
+    print(melody)
 
-    parsed_melody = []
-    for note in melody:
-        parsed_melody.append((note_to_number(note[1], 6), note[2]))
-
-    print(f"parsed_melody={parsed_melody}")
-
-    return parsed_melody
+    return melody
 
 
 def melody_to_midi(melody, output):
+
+    parsed_melody = []
+    for note in melody:
+        parsed_melody.append((note_to_number(note[2], 6), note[0], note[1], note[3]))
+
+    print(f"parsed_melody={parsed_melody}")
 
     track = 0
     channel = 0
@@ -96,9 +98,10 @@ def melody_to_midi(melody, output):
     my_midi = MIDIFile(1)
     my_midi.addTempo(track, time, tempo)
 
-    for i, pitch_duration in enumerate(melody):
+    for note, bar, timeslot, value in parsed_melody:
+        print(note, bar, timeslot, value)
         my_midi.addNote(
-            track, channel, pitch_duration[0], time + i, pitch_duration[1] / 4, volume)
+            track, channel, note, time + (bar-1)*8 + int(timeslot), value / 8, volume)
 
     with open(output + '.mid', "wb") as output_file:
         my_midi.writeFile(output_file)

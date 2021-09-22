@@ -43,3 +43,4 @@ C { guess(F,M,N) : scale(F,M,N) } C :- count(C).
 %% Get the scale
 scale(F,M) :- guess(F,M,_).
 notes(N) :- scale(F,M), scale(F,M,N).
+% notes(silence).

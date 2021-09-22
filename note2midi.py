@@ -161,6 +161,8 @@ def number_to_note(number: int) -> tuple:
 
 
 def note_to_number(note: str, octave: int) -> int:
+        
+    print(note)
     if note == 'silence':
         return 0
     

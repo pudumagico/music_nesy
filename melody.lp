@@ -1,24 +1,32 @@
-% #const notes_per_bar = 4.
-#const bars = 4.
+notes(d).
+notes(e).
+notes(g).
+notes(a).
+notes(b).
+notes(cs).
+notes(fs).
 
 notes(silence).
-values(4;2;1).
-bar(4).
 
-% time(1..M) :- M = notes_per_bar*bars.
+#const bars = 2.
+#const bar_length = 8.
 
+bar(1..bars).
+values(1).
 
-1 { melody(T,N,V) : notes(N), values(V) } 8 :- bar(T).
+timeslot(B, 1..T) :- bar(B), T = bar_length.
 
-% We need to fill the bar
+0 { melody(B,T,N,V) : notes(N), values(V) } 1 :- timeslot(B, T).
 
-:- S = #sum{ V : melody(T,N,V) }, S != 4.
+occupied(B,N,T..T+V-1) :- melody(B,T,N,V).
 
-% No same consecutives notes
+:- S = #sum{ V,T,N : melody(B,T,N,V) }, bar(B), S !=8.
 
-:- melody(T,N,_), melody(T,N,_).
+:- occupied(B,N1,T), occupied(B,N2,T), N1 != N2.
 
-% No same consecutives values, just to mix it up a lil
-% :- melody(T,_,V), melody(R,_,V).
+:- melody(B,T1,N,_), melody(B,T2,N,_), T1 != T2.
 
-% And there must be silence for spice
+:- occupied(B,N,T), T > 8.
+
+#show melody/4.
+#show occupied/3.
