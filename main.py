@@ -1,10 +1,12 @@
 import sys
 import random
+import argparse
+import os
 
 import madmom
 import clingo
-from midiutil import MIDIFile
 
+from midiutil import MIDIFile
 from note2midi import note_to_number
 
 
@@ -69,8 +71,7 @@ def reason_melody(chords, style=None):
         print(str(symbol))
         if 'melody' in str(symbol):
             melody.append(
-                ( int(str(symbol.arguments[0])), int(str(symbol.arguments[1])), str(symbol.arguments[2]), int(str(symbol.arguments[3]))))
-
+                (int(str(symbol.arguments[0])), int(str(symbol.arguments[1])), str(symbol.arguments[2]), int(str(symbol.arguments[3]))))
 
     melody.sort(key=lambda x: x[0])
     print(melody)
@@ -82,7 +83,8 @@ def melody_to_midi(melody, output):
 
     parsed_melody = []
     for note in melody:
-        parsed_melody.append((note_to_number(note[2], 6), note[0], note[1], note[3]))
+        parsed_melody.append(
+            (note_to_number(note[2], 6), note[0], note[1], note[3]))
 
     print(f"parsed_melody={parsed_melody}")
 
@@ -95,23 +97,29 @@ def melody_to_midi(melody, output):
 
     # One track, defaults to format 1 (tempo track is created
     # automatically)
-    my_midi = MIDIFile(1)
-    my_midi.addTempo(track, time, tempo)
+    midi = MIDIFile(1)
+    midi.addTempo(track, time, tempo)
+
+    track = 0
+    channel = 0
+    time = 0  # Eight beats into the composition
+    program = 100  # A Cello
+    midi.addProgramChange(track, channel, time, program)
 
     for note, bar, timeslot, value in parsed_melody:
         print(note, bar, timeslot, value)
-        my_midi.addNote(
+        midi.addNote(
             track, channel, note, time + (bar-1)*8 + int(timeslot), value / 8, volume)
 
     with open(output + '.mid', "wb") as output_file:
-        my_midi.writeFile(output_file)
+        midi.writeFile(output_file)
 
 
-def main(file_path):
+def main(file_path, style):
     # read entry file and produce chords
     chords = get_chords(file_path)
     # use the chords in clingo
-    melody = reason_melody(chords)
+    melody = reason_melody(chords, style)
     # produce a midi
     melody_to_midi(melody, file_path)
     # optionally, we may convert midi to wav/flac/mp3 and merge the files together
@@ -119,8 +127,24 @@ def main(file_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print('Usage: python main.py Cmaj-Amin.mp3')
-        exit(0)
 
-    main(sys.argv[1])
+    def existing_files(argument):
+        if os.path.exists(argument) and os.path.isfile(argument):
+            return argument
+        else:
+            raise argparse.ArgumentTypeError('File not found!')
+
+    parser = argparse.ArgumentParser(description='NeuroSymbolical Melody Generator')
+
+    parser.add_argument('-i', '--input', type=existing_files, metavar='file', default=None,
+                        help='input wav/mp3 path')
+
+    parser.add_argument('-s', '--style', type=existing_files, metavar='file', default=None,
+                        help='logical program with specific melody constraints')
+    
+    args = parser.parse_args()
+
+    main(
+        file_path=args.input,
+        style=args.style,
+    )

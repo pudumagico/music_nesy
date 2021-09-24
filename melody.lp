@@ -1,18 +1,9 @@
-notes(d).
-notes(e).
-notes(g).
-notes(a).
-notes(b).
-notes(cs).
-notes(fs).
-
-notes(silence).
-
 #const bars = 2.
 #const bar_length = 8.
 
+notes(silence).
 bar(1..bars).
-values(1).
+values(1;2).
 
 timeslot(B, 1..T) :- bar(B), T = bar_length.
 
@@ -27,6 +18,3 @@ occupied(B,N,T..T+V-1) :- melody(B,T,N,V).
 :- melody(B,T1,N,_), melody(B,T2,N,_), T1 != T2.
 
 :- occupied(B,N,T), T > 8.
-
-#show melody/4.
-#show occupied/3.
